@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  hmac-sender:
+    image: hmac-sender
+    build:
+      context: .
+      dockerfile: sender.Dockerfile
+    ports:
+      - "16666:8000"
+    volumes:
+      - ./sender:/sender/sender
+      - ./common:/sender/common
+      - ./secure:/sender/secure
+    environment:
+      - KEY=tGtiaiUFkuuMPuaPuXBbFfWk
+      - DIGESTMOD=SHA256
+  hmac-receiver:
+    image: hmac-receiver
+    build:
+      context: .
+      dockerfile: receiver.Dockerfile
+    ports:
+      - "16667:8000"
+    volumes:
+      - ./receiver:/receiver/receiver
+      - ./common:/receiver/common
+      - ./secure:/receiver/secure
+    environment:
+      - KEY=tGtiaiUFkuuMPuaPuXBbFfWk
+      - DIGESTMOD=SHA256
